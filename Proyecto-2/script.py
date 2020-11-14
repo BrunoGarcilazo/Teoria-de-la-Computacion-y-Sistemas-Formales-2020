@@ -33,13 +33,13 @@ p8 = tarea(8,   4,1,-1,-1,"Personal","ir al supermercado")
 p9 = tarea(9,   4,2,-1,-1,"Personal","arreglar la bicicleta")
 p10 = tarea(10, 4,1,-1,-1,"Personal","comprar ropa")
 p11 = tarea(11, 4,1,-1,-1,"Personal","comprar mueble")
-tareas.append(p1)
-tareas.append(p2)
 tareas.append(p3)
 tareas.append(p4)
+tareas.append(p2)
+tareas.append(p7)
 tareas.append(p5)
 tareas.append(p6)
-tareas.append(p7)
+tareas.append(p1)
 tareas.append(p8)
 tareas.append(p9)
 tareas.append(p10)
@@ -61,10 +61,7 @@ def organizarDia(tareas,dia): #WIP
             asignarTareaFija(tareaX,dia)
             continue
         else:
-
             result = obtenerTiempoLibre(tareaX.duracion,dia)
-            print("Resul: " + str(result))
-            print("----------------")
             if(result != -1):
                 asignarTareaDuracion(tareaX,dia,result)
 
@@ -82,7 +79,7 @@ def asignarTareaDuracion(tarea,dia,indiceInicio):
 
 def obtenerTiempoLibre(horas,dia): #Busca tiempo libre de X horas y devuelve el indice del dia donde empieza ese tiempo libre, sino devuelve -1
     aux = 0
-    for i in range(0,len(dia)-1,1):
+    for i in range(0,14,1):
         if(dia[i]==-1):
             aux+=1
             if(aux==horas):
@@ -91,5 +88,16 @@ def obtenerTiempoLibre(horas,dia): #Busca tiempo libre de X horas y devuelve el 
             aux = 0 
     return -1
 
+#Imprime la planificacion del dia.
+def printDia(tareas,dia):
+    for i in range(0,14,1):
+        print(getDescTarea(dia[i],tareas))
 
-print(organizarDia(tareas,dia))
+def getDescTarea(id,tareas):
+    for i in range(0,len(tareas)-1,1):
+        if tareas[i].id == id:
+            return tareas[i].desc
+    return "null"
+
+organizarDia(tareas,dia)
+printDia(tareas,dia)

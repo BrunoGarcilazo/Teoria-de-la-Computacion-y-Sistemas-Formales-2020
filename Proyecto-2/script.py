@@ -1,4 +1,10 @@
-# Script para solcucionar el "Activity Selection Problem" del Problema 1 - Proyecto 2
+# TAREAS 1 - Conjunto de Tareas utilizadas para evaluar Alg.1 y Alg.2
+
+tareas1 = [(1, 4), (3, 5), (0, 6), (5, 7),(3, 8), (5, 9), (6, 10), (8, 11), (8, 12), (2, 13), (12, 14)]
+
+# FIN TAREAS 1
+
+# TAREAS 2 - CLASE "tarea" con sus atributos y luego las TAREAS usadas para evaluar Alg.3 y Alg.4
 
 class tarea:
     def __init__(self,id,prioridad,duracion,horaInicio,horaFin,tipo,desc):
@@ -33,6 +39,7 @@ p8 = tarea(8,   4,1,-1,-1,"Personal","ir al supermercado")
 p9 = tarea(9,   4,2,-1,-1,"Personal","arreglar la bicicleta")
 p10 = tarea(10, 4,1,-1,-1,"Personal","comprar ropa")
 p11 = tarea(11, 4,1,-1,-1,"Personal","comprar mueble")
+
 tareas.append(p3)
 tareas.append(p4)
 tareas.append(p2)
@@ -44,19 +51,78 @@ tareas.append(p8)
 tareas.append(p9)
 tareas.append(p10)
 tareas.append(p11)
-    
-# Criterios a seguir:
-    # Ordenar tareas por Prioridad (mayor prioridad primero)
-    # Las de Prioridad 1 y horario fijo, agendarlas para el dia.
-    # Agendar las restantes de prioridad 1 sin horario fijo.
-    # Agendar posibles restantes de otras prioridades donde se pueda (tiempos libres)
 
-def organizarDia(tareas,dia): #WIP
+#FIN TAREAS 2
+
+# ALGORITMO 1 - Greedy (Alg.1)
+print("ALGORITMO 1 - Greedy (Alg.1)")
+def printMaxActivities(s , f ):
+    n = len(f)
+ 
+    i = 0
+    print (i)
+ 
+    for j in range(n):
+        if s[j] >= f[i]:
+            print (j)
+            i = j
+ 
+s = [1,3,0,5,3,5,6,8,8,2,12,3,2]
+f = [2,5,6,7,8,9,10,11,12,13,14,6,4]
+ 
+printMaxActivities(s , f)
+print("FIN ALGORITMO 1 (Alg.1)" + "\n")
+# FIN ALGORITMO 1 (Alg.1)
+
+
+# ALGORITMO 2 - Dinamico (Alg.2)
+print("ALGORITMO 2 - Dinamico (Alg.2)")
+def findNonConflictingJobs(jobs):
+ 
+    # sort the jobs according to increasing order of their start time
+    jobs.sort(key=lambda x: x[0])
+ 
+    # L[i] stores the maximum non-conflicting jobs that ends at i'th job
+    L = [[] for _ in range(len(jobs))]
+ 
+    for i in range(len(jobs)):
+        # consider each j less than i
+        for j in range(i):
+            # L[i] = max(L[j]) where jobs[j].finish is less than jobs[i].start
+            start, finish = (jobs[i][0], jobs[j][1])
+            if finish < start and len(L[i]) < len(L[j]):
+                L[i] = L[j].copy()
+ 
+        # L[i] ends at i'th job
+        L[i].append(jobs[i])
+ 
+    # find the List having maximum size
+    max = []
+    for pair in L:
+        if len(max) < len(pair):
+            max = pair
+ 
+    print(max)
+ 
+if __name__ == '__main__':
+ 
+    # Each pair stores the start and the finish time of a job
+    jobs = [(1, 4), (3, 5), (0, 6), (5, 7),
+            (3, 8), (5, 9), (6, 10), (8, 11),
+            (8, 12), (2, 13), (12, 14)]
+ 
+    findNonConflictingJobs(jobs)
+print("FIN ALGORITMO 2 (Alg.2)" + "\n")
+# FIN ALGORITMO 2 (Alg.2)
+
+
+
+    
+#ALGORITMO 3 (Alg.3)
+print("ALGORITMO 3 (Alg.3)")
+def organizarDia(tareas,dia):
     for i in range(0,len(tareas)-1,1):
-        print(dia)
-        tareaX = tareas[i]
-        print(tareaX.duracion)
-        
+        tareaX = tareas[i]       
         if(tareaX.prioridad == 1 and tareaX.horaInicio != -1 and tareaX.horaFin != -1): #No puedo ignorar esta tarea
             asignarTareaFija(tareaX,dia)
             continue
@@ -101,3 +167,5 @@ def getDescTarea(id,tareas):
 
 organizarDia(tareas,dia)
 printDia(tareas,dia)
+print("FIN ALGORITMO 3 (Alg.3)")
+# FIN ALGORITMO 3 (Alg.3)
